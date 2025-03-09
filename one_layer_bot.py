@@ -12,3 +12,9 @@ class OneLayerBot():
         for i in range(len(candidates)):
             row=candidates[i][0]
             col=candidates[i][1]
+            newboard = copy.deepcopy(board)
+            newboard.make_move(row,col,self.player)
+
+            if (newboard.has_winner()==self.player):
+                return [row,col]
+        return random.choice(candidates)
