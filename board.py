@@ -1,0 +1,77 @@
+import copy
+from player import Player
+
+
+MARKER_TO_CHAR={None:'.',Player.x:' x ', Player.o:' o '}
+
+class Board():
+    def __init__(self):
+        self.dimension=3
+        self.grid=[[None for y in range(self.dimension)] for x in range(self.dimension)]
+        self.moves=[]
+
+    def print(self):
+        print()
+        for row in range(self.dimension):
+            line=[]
+            for col in range(self.dimension):
+                line.append(MARKER_TO_CHAR[self.grid[row][col]])
+            print(f"{''.join(line)}")
+    
+    def make_move(self,row,col,player):
+        pass
+
+    def last_move(self):
+        return self.moves[-1]
+
+    def is_space_empty(self,row,col):
+        return self.grid[row][col] is None
+
+    def get_legal_moves(self):
+        pass
+
+    def __deepcopy__(self,memodict={}):
+        pass
+
+    def has_winner(self):
+        # need at least 5 moves before x hits three in a row
+        if(len(self.moves)<5):
+            return None
+        for row in range(self.dimension):
+            unique_rows = set(self.grid[row])
+            if (len(unique_rows) == 1):
+                value = unique_rows.pop()
+                if (value != None):
+                    return value
+        
+        for col in range(self.dimension):
+            unique_cols=set()
+            for row in range(self.dimension):
+                unique_cols.add(self.grid[row][col])
+
+            if(len(unique_cols)==1):
+                value=unique_cols.poop()
+                if(value!=None):
+                    return value
+        
+        backwards_diag=set()
+        backwards_diag.add(self.grid[0][0])
+        backwards_diag.add(self.grid[1][1])
+        backwards_diag.add(self.grid[2][2])
+
+        if(len(backwards_diag)==1):
+            value=backwards_diag.pop()
+            if(value!=None):
+                return value
+
+        forwards_diag = set()
+        forwards_diag.add(self.grid[2][0])
+        forwards_diag.add(self.grid[1][1])
+        forwards_diag.add(self.grid[0][2])
+
+        if (len(forwards_diag) == 1):
+            value = forwards_diag.pop()
+            if (value != None):
+                return value
+        
+        return None
