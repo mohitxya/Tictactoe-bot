@@ -19,8 +19,12 @@ class Board():
             print(f"{''.join(line)}")
     
     def make_move(self,row,col,player):
-        pass
-
+        if (self.is_space_empty(row, col)):
+            self.grid[row][col] = player
+            self.moves.append([row,col])
+        else:
+            raise Exception("Attempting to move onto already occupied space")
+        
     def last_move(self):
         return self.moves[-1]
 
@@ -28,10 +32,17 @@ class Board():
         return self.grid[row][col] is None
 
     def get_legal_moves(self):
-        pass
-
+        choices=[]
+        for row in range(self.dimension):
+            for col in range(self.dimension):
+                if(self.is_space_empty(row,col)):
+                    choices.append([row,col])
+        return choices
     def __deepcopy__(self,memodict={}):
-        pass
+        dp=Board()
+        dp.grid=copy.deepcopy(self.grid)
+        dp.moves=copy.deepcopy(self.moves)
+        return dp
 
     def has_winner(self):
         # need at least 5 moves before x hits three in a row
@@ -50,7 +61,7 @@ class Board():
                 unique_cols.add(self.grid[row][col])
 
             if(len(unique_cols)==1):
-                value=unique_cols.poop()
+                value=unique_cols.pop()
                 if(value!=None):
                     return value
         
