@@ -1,0 +1,11 @@
+x wins: 77
+o wins: 678
+ties: 1
+--
+x wins: 908
+o wins: 13
+ties: 1
+--
+x wins: 315
+o wins: 170
+ties: 1
